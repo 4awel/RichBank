@@ -1,0 +1,81 @@
+[
+    {
+        "email": "sdenis10@mail.ru",
+        "password": "a12345",
+        "isRegistred": true,
+        "cards": [
+            {
+                "balance": 10000,
+                "number": 2200456789899000,
+                "title": "mastercard",
+                "svs": 123,
+                "naming": "IVAN VLADIMIROVICH",
+                "year": 1223
+            },
+            {
+                "balance": 0,
+                "number": 2200416656898432,
+                "title": "mir",
+                "svs": 123,
+                "naming": "IVAN VLADIMIROVICH",
+                "year": 1223
+            }
+        ],
+        "transactions": [
+            {
+                "title": "Перевод",
+                "fromOrg": "2200416656898432",
+                "fronName": "Антон П.",
+                "price": "+10000"
+            },
+            {
+                "title": "Перевод",
+                "fromOrg": "2200416656898432",
+                "fronName": "Антон П.",
+                "price": "-1200"
+            },
+            {
+                "title": "Перевод",
+                "fromOrg": "2200416656898432",
+                "fronName": "Антон П.",
+                "price": "-100"
+            }
+        ]
+    },
+    {
+        "email": "artem@bk.ru",
+        "password": "123456",
+        "isRegistred": true,
+        "cards": [
+            {
+                "balance": 1543,
+                "number": 4000100020005001,
+                "title": "visa",
+                "svs": 123,
+                "naming": "IVAN VLADIMIROVICH",
+                "year": 1223
+            }
+        ],
+        "transactions": [
+            {
+                "title": "Перевод",
+                "fromOrg": "2200416656898432",
+                "fronName": "Антон П.",
+                "price": "+100"
+            },
+            {
+                "title": "Перевод",
+                "fromOrg": "2200416656898432",
+                "fronName": "Антон П.",
+                "price": "-1005"
+            },
+            {
+                "title": "Перевод",
+                "fromOrg": "2200416656898432",
+                "fronName": "Антон П.",
+                "price": "-300"
+            }
+        ]
+        
+    }
+]
