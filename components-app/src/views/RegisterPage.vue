@@ -5,7 +5,7 @@
 
 <template>
 
-    dsacasa
+    Пишем код, отом сливаем лучший!!!
 
 </template>
 
