@@ -10,7 +10,7 @@ export default {
         }
     },
     methods: {
-        
+
     }
 }
 
@@ -38,7 +38,6 @@ export default {
         </form>
     </main>
 </template>
-
 
 <style scoped>
 
