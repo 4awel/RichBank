@@ -83,6 +83,6 @@ a:hover {
 
 .transition-register:hover {
     color: rgb(55, 124, 86);
-    cursor: pointer
+    cursor: pointer;
 }
 </style>
