@@ -28,7 +28,7 @@ import axios from 'axios';
 </script>
 <template>
 
-<main style="height: 95vh; display: flex; justify-content: center; align-items: center;">
+<main style="height: 90vh; display: flex; justify-content: center; align-items: center;">
     <form @submit="sendData" class="container-login">
         <h2 style="font-size: 32px; text-align: center;">
             Вход
