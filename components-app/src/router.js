@@ -5,6 +5,7 @@ import HistoryPage from './views/HistoryPage.vue';
 import ProfilePage from './views/ProfilePage.vue';
 import LoginPage from './views/LoginPage.vue';
 import CardPage from './views/CardPage.vue';
+import RegisterPage from './views/RegisterPage.vue';
 
 export default createRouter({
     history: createWebHistory(),
@@ -39,6 +40,11 @@ export default createRouter({
             name: 'addcard',
             path: '/addcard',
             component: CardPage
+        },
+        {
+            name: 'register',
+            path: '/register',
+            component: RegisterPage
         }
     ]
 })
