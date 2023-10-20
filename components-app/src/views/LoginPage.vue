@@ -19,6 +19,9 @@ import axios from 'axios';
                         password: this.password,
                     });
                 }
+            },
+            goRegister() {
+                this.$router.push({name: 'register'});  
             }
         }
     }
@@ -39,7 +42,7 @@ import axios from 'axios';
         </label>
         <input v-model="password" type="password" placeholder="Введите пароль">
         <button type="submit">Войти</button>
-        <a href="" style="text-align: center;">Зарегестрироваться</a>
+        <a @click="goRegister" href="" style="text-align: center;">Зарегестрироваться</a>
         <div v-if="alertErr" class="alert-error" style="background-color: rgba(255, 0, 0, 0.315); padding: 20px;">
             Поля не заполнены!
         </div>
