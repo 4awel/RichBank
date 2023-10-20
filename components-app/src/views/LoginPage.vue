@@ -42,7 +42,7 @@ import axios from 'axios';
         </label>
         <input v-model="password" type="password" placeholder="Введите пароль">
         <button type="submit">Войти</button>
-        <a @click="goRegister" href="" style="text-align: center;">Зарегестрироваться</a>
+        <p @click="goRegister" class="transition-register" href="" style="text-align: center;">Зарегестрироваться</p>
         <div v-if="alertErr" class="alert-error" style="background-color: rgba(255, 0, 0, 0.315); padding: 20px;">
             Поля не заполнены!
         </div>
@@ -79,5 +79,10 @@ button:hover {
 
 a:hover {
     color: rgb(83, 177, 125);
+}
+
+.transition-register:hover {
+    color: rgb(55, 124, 86);
+    cursor: pointer
 }
 </style>
