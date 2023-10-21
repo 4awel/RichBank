@@ -72,3 +72,34 @@ app.post('/users', async function (req, res) {
         }
     }
 });
+
+app.post('/register/user', async function(req, res) {
+    // Получаем данные с клиента
+    const {email} = req.body;
+    const {firstPassword} = req.body;
+    const {secondPassword} = req.body;
+    
+    let password;
+
+    // Проверяемы совпадает ли пароль
+    if (firstPassword === secondPassword) {
+        password = firstPassword;
+        // Проверяем что пароль не меньше 6 символов
+        if (password.lenght > 6) {
+            let users = new User({
+                email: email,
+                password: password
+            });
+            console.log(users); 
+        } else {
+            res.status('error: password < 6')
+        }
+    } else {
+        res.status('error: password is not matches')
+    }
+
+    // Сохраняем пользователя в БД
+    // users.save();
+
+    res.send('OK');
+});

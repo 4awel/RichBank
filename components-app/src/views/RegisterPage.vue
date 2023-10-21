@@ -4,13 +4,19 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            firstpassword: '',
-            secondpassword: '',
+            firstPassword: '',
+            secondPassword: '',
             email: ''
         }
     },
     methods: {
-
+        async sendData() {
+            await axios.post('/register/user', {
+                firstPassword: this.firstPassword,
+                secondPassword: this.secondPassword,
+                email: this.email
+            });
+        }
     }
 }
 
@@ -18,15 +24,15 @@ export default {
 
 <template>
     <main style="height: 90vh; display: flex; justify-content: center; align-items: center;">
-        <form style="padding: 60px 100px 60px 100px;">
+        <form @submit="sendData" style="padding: 60px 100px 60px 100px;">
                 <button type="submit" class="btn-reg">
                     Зарегестрироваться
                 </button>
-            <input style="padding: 10px; margin: 4px;" v-model="firstpassword" type="password" placeholder="Введите пароль">
+            <input style="padding: 10px; margin: 4px;" v-model="firstPassword" type="password" placeholder="Введите пароль">
             <label for="password">
                 Повторите пароль
             </label>
-            <input style="padding: 10px; margin: 4px;" v-model="secondpassword" type="password" placeholder="Введите пароль">
+            <input style="padding: 10px; margin: 4px;" v-model="secondPassword" type="password" placeholder="Введите пароль">
             <label for="password">
                 Придумайте пароль
             </label>
