@@ -10,28 +10,45 @@ export default {
             year: '',
             title: '',
 
-            alertErr: true
+            alertErr: false
         }
     },
     methods: {
+        async sendData(evt) {
+            // Чтобы страница не обновлялась
+            evt.preventDefault();
+            //  Проверяем на заполнение полей
+            if (this.number == '' || this.svs == '' || this.naming == '' || this.year == '' || this.title == '') {
+                this.alertErr = !this.alertErr
+            } else {
+                // Отправляем данные из полей ввода
+                await axios.post('/add/card', {
+                    number: this.number,
+                    svs: this.svs,
+                    naming: this.naming,
+                    year: this.year,
+                    title: this.title
+                });
 
-        async sendData() {
-
-            await axios.post('/add/card', {
-                number: this.number,
-                svs: this.svs,
-                naming: this.naming,
-                year: this.year,
-                title: this.title
-            });
+                // Очищаем поля
+                this.number = '';
+                this.svs = '';
+                this.naming = '';
+                this.year = '';
+                this.title = ''
+            }
+        },
+        toUpperCaseText() {
+            // Чтобы при введение именя на карте текст всегда был с заглавных букв
+            this.naming = this.naming.toUpperCase();
         }
-
     }
 }
 </script>
 <template>
     <form @submit="sendData">
-        <span style="display: flex; justify-content: center; padding: 30px; background-color: #d81c1c5b; margin: 14px;">
+        <span v-if="alertErr"
+            style="display: flex; justify-content: center; padding: 30px; background-color: #d81c1c5b; margin: 14px;">
             Некоторые поля пустые, пожалуйста заполните их все!
         </span>
         <button type="submit" class="btn-hover">Добавить</button>
@@ -49,11 +66,11 @@ export default {
         </label>
         <label for="">
             SVS
-            <input style="width: 10%;" type="text" v-model="svs" placeholder="SVS" name="" id="">
+            <input style="width: 10%;" type="number" v-model="svs" placeholder="SVS" name="" id="">
         </label>
         <label for="">
             Имя на карте
-            <input type="text" v-model="naming" placeholder="IVAN IVANOV" name="" id="">
+            <input @input="toUpperCaseText" type="text" v-model.trim="naming" placeholder="IVAN IVANOV" name="" id="">
         </label>
         <label for="">
             Срок годности карты
