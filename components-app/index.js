@@ -25,6 +25,7 @@ app.use(express.json());
 const userSchema = new mongoose.Schema({
     email: String,
     password: String,
+    isRegistred: Boolean,
     cards: Array,
     transaction: Array
 });
@@ -36,7 +37,7 @@ app.post('/users', async function (req, res) {
     const { password } = req.body;
 
     //sdenis10@mail.ru
-
+    console.log(email, password)
     const users = await User.find();
     for (user of users) {
         if (email == user.email && password == user.password) {
@@ -69,6 +70,7 @@ app.post('/users', async function (req, res) {
             });
         } else {
             res.status(401);
+            console.log('err')
         }
     }
 });
@@ -81,25 +83,26 @@ app.post('/register/user', async function(req, res) {
     
     let password;
 
-    // Проверяемы совпадает ли пароль
+    // Проверяемы совпадают ли пароли
     if (firstPassword === secondPassword) {
-        password = firstPassword;
         // Проверяем что пароль не меньше 6 символов
-        if (password.lenght > 6) {
+        password = firstPassword
+        if (password.length > 6) {
             let users = new User({
                 email: email,
-                password: password
+                password: password,
+                isRegistred: true
             });
+
+            // Сохраняем пользователя в БД
+            users.save();
+            
             console.log(users); 
+            res.send('OK');
         } else {
             res.status('error: password < 6')
         }
     } else {
         res.status('error: password is not matches')
     }
-
-    // Сохраняем пользователя в БД
-    // users.save();
-
-    res.send('OK');
 });
