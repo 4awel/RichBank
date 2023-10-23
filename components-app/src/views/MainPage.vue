@@ -75,43 +75,68 @@ export default {
                             <span @click="hideCrad(index)" v-if="hide == index">{{ card.number }}</span>
                             <b @click="hideCrad(index)" v-if="hide !== index">Показать номер карты</b>
                         </div>
-                        <svg @click="toggleModal" class="info-fill" xmlns="http://www.w3.org/2000/svg" id="Outline" viewBox="0 0 24 24"
-                            width="28" height="28">
+                        <svg @click="toggleModal" class="info-fill" xmlns="http://www.w3.org/2000/svg" id="Outline"
+                            viewBox="0 0 24 24" width="28" height="28">
                             <path
                                 d="M12,0A12,12,0,1,0,24,12,12.013,12.013,0,0,0,12,0Zm0,22A10,10,0,1,1,22,12,10.011,10.011,0,0,1,12,22Z" />
                             <path d="M12,10H11a1,1,0,0,0,0,2h1v6a1,1,0,0,0,2,0V12A2,2,0,0,0,12,10Z" />
                             <circle cx="12" cy="6.5" r="1.5" />
                         </svg>
+                        <div v-if="openModal" class="modal">
+                            <div class="modal-main">
+                                <h2 style="color: rgb(43, 172, 107); margin: 20px;">Информация о карте</h2>
+
+                                <div class="modal-container">
+                                    <p class="p-info-to-card">Баланс:<b>{{ card.balance }}</b></p>
+                                    <p class="p-info-to-card">Номер карты: <b>{{ card.number }}</b></p>
+                                    <p class="p-info-to-card">SVS: <b>{{ card.svs }}</b></p>
+                                    <p class="p-info-to-card">Имя на карте: <b>{{ card.naming }}</b></p>
+                                    <p class="p-info-to-card">Срок действия: <b>{{ card.year / 100 }}</b></p>
+                                    <p class="p-info-to-card">Название карты: <b>{{ card.title }}</b></p>
+                                </div>
+
+                                <button @click="toggleModal" class="modal-close">&#10006;</button>
+                                <div style="display: flex; justify-content: end;">
+                                    <button class="delete-btn">Удалить карту</button>
+                                </div>
+                            </div>
+                        </div>
                     </li>
                 </div>
             </div>
         </ul>
 
-        <div v-if="openModal" class="modal">
-            <div class="modal-main">
-                <h2 class="modal-title">Modal window</h2>
 
-                <div class="modal-container">
-                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat minus ad quasi maxime similique!
-                        Accusamus, beatae magnam provident, officia asperiores corrupti totam voluptates autem quis hic sit
-                        similique unde in.</p>
-                </div>
-
-                <button @click="toggleModal" class="modal-close">&#10006;</button>
-            </div>
-        </div>
     </main>
 </template>
 <style>
+.p-info-to-card {
+    display: flex;
+    justify-content: space-between;
+}
+
+.delete-btn {
+    color: #fff;
+    padding: 10px;
+    margin: 20px 0 0 0;
+    background-color: #e03131d2;
+    border-radius: 20px;
+    border: none;
+}
+
+.delete-btn:hover {
+    transition: all 500ms;
+    background-color: #a82d2dd2;
+}
 
 .modal {
-   position: fixed;
-   inset: 0;
-   background-color: #0000003f; 
-   display: flex;
-   cursor: pointer;
-   padding: 30px;
-   overflow-y: auto;
+    position: fixed;
+    inset: 0;
+    background-color: #0000003f;
+    display: flex;
+    cursor: pointer;
+    padding: 30px;
+    overflow-y: auto;
 }
 
 .modal-main {
@@ -119,14 +144,13 @@ export default {
     max-width: 600px;
     background-color: #fff;
     margin: auto;
-    color: #000;
+    color: #000000;
     border-radius: 16px;
     padding: 30px;
     cursor: default;
-}
-
-.modal-title {
-    margin: 20px;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
 }
 
 .modal-close {
@@ -225,5 +249,4 @@ export default {
 
 .card-fill-visa {
     fill: rgba(102, 191, 250, 0.788);
-}
-</style>
+}</style>
