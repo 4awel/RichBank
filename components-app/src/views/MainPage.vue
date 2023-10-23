@@ -11,6 +11,8 @@ export default {
             mc: false,
             visa: false,
             mir: false,
+
+            openModal: false
         }
     },
     mounted() {
@@ -26,6 +28,9 @@ export default {
         },
         goAddCard() {
             this.$router.push({ name: 'addcard' });
+        },
+        toggleModal() {
+            this.openModal = !this.openModal;
         }
     }
 }
@@ -42,13 +47,12 @@ export default {
                 </svg>
                 <div class="under-group-item">
                     <li v-for="(card, index) in cards" class="item">
-                        
+
                         <svg :class="{
                             'card-fill-mc': card.title == 'mastercard',
                             'card-fill-mir': card.title == 'mir',
                             'card-fill-visa': card.title == 'visa',
-                        }" xmlns="http://www.w3.org/2000/svg" id="Filled" viewBox="0 0 24 24" width="94"
-                            height="94">
+                        }" xmlns="http://www.w3.org/2000/svg" id="Filled" viewBox="0 0 24 24" width="94" height="94">
                             <path d="M19,3H5A5.006,5.006,0,0,0,0,8H24A5.006,5.006,0,0,0,19,3Z" />
                             <path
                                 d="M0,16a5.006,5.006,0,0,0,5,5H19a5.006,5.006,0,0,0,5-5V10H0Zm7-.5A1.5,1.5,0,1,1,5.5,14,1.5,1.5,0,0,1,7,15.5" />
@@ -71,7 +75,7 @@ export default {
                             <span @click="hideCrad(index)" v-if="hide == index">{{ card.number }}</span>
                             <b @click="hideCrad(index)" v-if="hide !== index">Показать номер карты</b>
                         </div>
-                        <svg class="info-fill" xmlns="http://www.w3.org/2000/svg" id="Outline" viewBox="0 0 24 24"
+                        <svg @click="toggleModal" class="info-fill" xmlns="http://www.w3.org/2000/svg" id="Outline" viewBox="0 0 24 24"
                             width="28" height="28">
                             <path
                                 d="M12,0A12,12,0,1,0,24,12,12.013,12.013,0,0,0,12,0Zm0,22A10,10,0,1,1,22,12,10.011,10.011,0,0,1,12,22Z" />
@@ -82,9 +86,62 @@ export default {
                 </div>
             </div>
         </ul>
+
+        <div v-if="openModal" class="modal">
+            <div class="modal-main">
+                <h2 class="modal-title">Modal window</h2>
+
+                <div class="modal-container">
+                    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat minus ad quasi maxime similique!
+                        Accusamus, beatae magnam provident, officia asperiores corrupti totam voluptates autem quis hic sit
+                        similique unde in.</p>
+                </div>
+
+                <button @click="toggleModal" class="modal-close">&#10006;</button>
+            </div>
+        </div>
     </main>
 </template>
 <style>
+
+.modal {
+   position: fixed;
+   inset: 0;
+   background-color: #0000003f; 
+   display: flex;
+   cursor: pointer;
+   padding: 30px;
+   overflow-y: auto;
+}
+
+.modal-main {
+    position: relative;
+    max-width: 600px;
+    background-color: #fff;
+    margin: auto;
+    color: #000;
+    border-radius: 16px;
+    padding: 30px;
+    cursor: default;
+}
+
+.modal-title {
+    margin: 20px;
+}
+
+.modal-close {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 22px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: 2px solid rgb(83, 177, 125);
+    border-radius: 10px;
+    padding: 4px;
+}
+
 .info-fill {
     fill: rgb(56, 151, 99);
 }
@@ -168,4 +225,5 @@ export default {
 
 .card-fill-visa {
     fill: rgba(102, 191, 250, 0.788);
-}</style>
+}
+</style>
