@@ -55,9 +55,9 @@ export default {
         <label for="">
             Название карты
             <select v-model="title" name="title" id="">
-                <option value="mastercard">MasterCard</option>
-                <option value="visa">VISA</option>
-                <option value="mir">Mir</option>
+                <option value="MasterCard">MasterCard</option>
+                <option value="VISA">VISA</option>
+                <option value="MIR">Mir</option>
             </select>
         </label>
         <label for="">
