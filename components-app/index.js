@@ -68,6 +68,15 @@ app.post('/users', async function (req, res) {
 
                         res.send('ok');
                     });
+                    app.put('/upDate/theme', async function (req, res) {
+                        const { isTheme } = req.body;
+
+                        accountUsers.isDarkTheme = isTheme;
+                        console.log(accountUsers.isDarkTheme);
+                        await accountUsers.save()
+
+                        res.send('ok')
+                    });
                     res.send(accountUsers);
                 });
             } else {
