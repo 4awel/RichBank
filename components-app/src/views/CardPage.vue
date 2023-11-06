@@ -10,7 +10,8 @@ export default {
             year: '',
             title: '',
 
-            alertErr: false
+            alertErr: false,
+            alertSucc: false
         }
     },
     methods: {
@@ -30,6 +31,8 @@ export default {
                     title: this.title
                 });
 
+                this.alertSucc = !this.alertSucc
+
                 // Очищаем поля
                 this.number = '';
                 this.svs = '';
@@ -47,10 +50,12 @@ export default {
 </script>
 <template>
     <form @submit="sendData">
-        <span v-if="alertErr"
-            style="display: flex; justify-content: center; padding: 30px; background-color: #d81c1c5b; margin: 14px;">
-            Некоторые поля пустые, пожалуйста заполните их все!
-        </span>
+        <div v-if="alertErr" class="alert alert-warning" role="alert">
+           Некоторые поля пустые, пожалуйста заполните их все!
+        </div>
+        <div v-if="alertSucc" class="alert alert-primary" role="alert">
+            Ваша карта успешно добавлена!
+        </div>
         <button type="submit" class="btn-hover">Добавить</button>
         <label for="">
             Название карты
@@ -110,6 +115,7 @@ input {
     padding: 8px;
     border-radius: 20px;
     font-size: 18px;
+    margin-bottom: 7px;
 }
 
 .btn-hover:hover {

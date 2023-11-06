@@ -49,9 +49,9 @@ export default {
                     <li v-for="(card, index) in cards" class="item">
 
                         <svg :class="{
-                            'card-fill-mc': card.title == 'mastercard',
-                            'card-fill-mir': card.title == 'mir',
-                            'card-fill-visa': card.title == 'visa',
+                            'card-fill-mc': card.title == 'MasterCard',
+                            'card-fill-mir': card.title == 'MIR',
+                            'card-fill-visa': card.title == 'VISA',
                         }" xmlns="http://www.w3.org/2000/svg" id="Filled" viewBox="0 0 24 24" width="94" height="94">
                             <path d="M19,3H5A5.006,5.006,0,0,0,0,8H24A5.006,5.006,0,0,0,19,3Z" />
                             <path
