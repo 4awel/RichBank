@@ -84,7 +84,7 @@ export default {
         <h2>Добавить карту:</h2>
     </form>
 </template>
-<style>
+<style scoped>
 h2 {
     font-size: 40px;
 }

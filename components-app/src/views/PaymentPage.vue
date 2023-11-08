@@ -1,12 +1,23 @@
 <script>
+export default {
+    data() {
+        return {
 
+        }
+    },
+    methods: {
+        goTransfer() {
+            this.$router.push({name: 'transfer'});
+        }
+    }
+}
 </script>
 <template>
     <main>
         <div class="container-payment">
             <h2>Платежи</h2>
             <div class="container">
-                <div class="item-payment">
+                <div class="item-payment" @click="goTransfer">
                     <svg class="fill-payment" xmlns="http://www.w3.org/2000/svg" id="Outline" viewBox="0 0 24 24" width="512" height="512">
                         <path
                             d="M19,22H5a5.006,5.006,0,0,1-5-5V7A5.006,5.006,0,0,1,5,2H19a5.006,5.006,0,0,1,5,5V17A5.006,5.006,0,0,1,19,22ZM5,4A3,3,0,0,0,2,7V17a3,3,0,0,0,3,3H19a3,3,0,0,0,3-3V7a3,3,0,0,0-3-3Z" />

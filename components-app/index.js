@@ -14,6 +14,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/RichBank');
 
 // Settng CORS
 let cors = require('cors');
+const { mquery } = require("mongoose");
 app.use(cors({
     origin: 'http://localhost:5173'
 }));
@@ -23,12 +24,73 @@ app.use(express.json());
 
 // Setting schema
 const userSchema = new mongoose.Schema({
-    email: String,
-    password: String,
-    isRegistred: Boolean,
-    isDarkTheme: Boolean,
-    cards: Array,
-    transaction: Array
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    password: {
+        type: String,
+        required: true
+    },
+    isRegistred: {
+        type: Boolean,
+        defualt: false
+    },
+    isDarkTheme: {
+        type: Boolean,
+        defualt: false
+    },
+    cards: [
+        {
+            number: {
+                type: Number,
+                required: true,
+                unique: true
+            },
+            svs: {
+                type: Number,
+                required: true,
+            },
+            naming: {
+                type: String,
+                required: true
+            },
+            year: {
+                type: Number,
+                required: true,
+                unique: true
+            },
+            title: {
+                type: String,
+                require: true
+            },
+            balance: {
+                type: Number,
+                required: true,
+            },
+        }
+    ],
+    transaction: [
+        {
+            title: {
+                type: String,
+                require: true
+            },
+            fromOrg: {
+                type: String,
+                require: true
+            },
+            fromName: {
+                type: String,
+                require: true
+            },
+            price: {
+                type: String,
+                require: true
+            },
+        }
+    ]
 });
 
 const User = mongoose.model('users', userSchema);
@@ -45,7 +107,6 @@ app.post('/users', async function (req, res) {
             if (email == user.email && password == user.password) {
                 app.get('/users/account', async function (req, res) {
                     let accountUsers = await User.findOne({ email });
-                    // console.log(accountUsers.cards)
                     app.post('/add/card', async function (req, res) {
                         const { number } = req.body;
                         const { svs } = req.body;
@@ -77,11 +138,38 @@ app.post('/users', async function (req, res) {
 
                         res.send(accountUsers)
                     });
+                    app.put('/send/money', async function (req, res) {
+                        const { cardTo } = req.body;
+                        const { cardFrom } = req.body;
+                        const { summRub } = req.body;
+
+                        let userTo = await User.findOne({ "cards.number": cardTo });
+                        const userToCard = userTo.cards.find((card) => card.number === cardTo);
+
+                        let userFrom = await User.findOne({ "cards.number": cardFrom });
+                        const userFromCard = userFrom.cards.find((card) => card.number === cardFrom);
+                        console.log(userFromCard)
+
+                        userFromCard.balance -= summRub
+                        userToCard.balance += summRub
+
+                        // console.log(user, userCard, userCard.balance)
+
+                        try {
+                            let resultTo = await userTo.save();
+                            let resultFrom = await userFrom.save()
+                            console.log('Изменения успешно сохранены:', resultTo, resultFrom);
+                            res.send(user);
+                        } catch (err) {
+                            // console.error('Ошибка при сохранении изменений:', err);
+                            res.status(500).send(err);
+                        }
+                    });
                     res.send(accountUsers);
                 });
             } else {
                 res.status(401);
-                console.log('err')
+                console.log('not found')
             }
         }
     } catch (err) {

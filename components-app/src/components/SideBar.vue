@@ -46,7 +46,7 @@ export default {
     },
     async upDateTheme() {
       await axios
-      .put('upData/theme', {
+      .put('/upData/theme', {
         isDarkTheme: this.isDarkTheme,
       })
       .then((res) => {
@@ -142,9 +142,7 @@ export default {
     </div>
     <div class="container-sb-2">
       <button v-if="!isRegistred" @click="goLogin" class="btn-login">Войти</button>
-      <div v-if="isRegistred" @click="goProfile" class="avatar-sb">
-
-      </div>
+        <img v-if="isRegistred" @click="goProfile" class="avatar-sb" src="../assets/5.jpg" alt="">
       <svg v-if="!isDarkTheme && !angle" class="change-color" xmlns="http://www.w3.org/2000/svg" id="Layer_1"
         data-name="Layer 1" viewBox="0 0 24 24" width="28" height="28">
         <path
@@ -257,10 +255,11 @@ export default {
 }
 
 .avatar-sb {
-  background-color: #fff;
+  /* background-color: #fff; */
   border: 2px solid rgb(83, 177, 125);
   border-radius: 50%;
-  padding: 22px;
+  width: 64px;
+  height: 64px;
   cursor: pointer;
 }
 

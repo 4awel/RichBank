@@ -24,7 +24,7 @@ export default {
 
 <template>
     <main style="height: 90vh; display: flex; justify-content: center; align-items: center;">
-        <form @submit="sendData" style="padding: 60px 100px 60px 100px;">
+        <form class="container-login" @submit="sendData" style="padding: 60px 100px 60px 100px;">
                 <button type="submit" class="btn-reg">
                     Зарегестрироваться
                 </button>
@@ -56,6 +56,36 @@ export default {
 
 .btn-reg:hover {
     background-color:  rgb(56, 138, 93);
+}
+
+.container-login {
+    box-shadow: 1px 1px 10px rgb(83, 177, 125);
+    border-radius: 20px;
+    padding: 45px 70px;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 10px;
+}
+
+input {
+    border-radius: 20px;
+    border: none;
+    background-color: rgba(86, 173, 127, 0.527);
+    padding: 10px;
+}
+
+button {
+    background-color: rgb(83, 177, 125);
+    border-radius: 20px;
+    padding: 10px;
+}
+
+button:hover {
+    background-color: rgb(72, 134, 100);
+}
+
+a:hover {
+    color: rgb(83, 177, 125);
 }
 
 </style>

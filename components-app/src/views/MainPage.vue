@@ -174,8 +174,8 @@ export default {
     top: 10px;
     right: 10px;
     border: 2px solid rgb(83, 177, 125);
-    border-radius: 10px;
-    padding: 4px;
+    border-radius: 50%;
+    padding: 6px;
 }
 
 .modal-close:hover {
@@ -209,7 +209,6 @@ export default {
 
 .item-group {
     display: flex;
-
 }
 
 .item {

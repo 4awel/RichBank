@@ -4,7 +4,7 @@ import axios from 'axios';
 export default {
     data() {
         return {
-            username: ''
+            username: '',
         }
     },
     mounted() {
@@ -49,7 +49,7 @@ export default {
 }
 
 .input-add-img:hover {
-    background-color: #41c290;
+    background-color: #40a77f;
 }
 
 .btn-add-img {
