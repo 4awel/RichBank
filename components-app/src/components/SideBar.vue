@@ -1,7 +1,9 @@
 <script>
 import axios from 'axios';
+import TransitionButton from "@/components/UI/TransitionButton.vue";
 
 export default {
+  components: {TransitionButton},
   data() {
     return {
       isDarkTheme: false,
@@ -95,50 +97,64 @@ export default {
       </div>
     </div>
     <div class="btn-group-sb">
-      <button @click="goMain" class="btn-item-sb" :class="{ 'btn-active': $route.name == 'main' }">
+      <transition-button @click="goMain" :class="{ 'btn-active': $route.name == 'main' }">
+
         <svg class="change-color" xmlns="http://www.w3.org/2000/svg" id="Outline" viewBox="0 0 24 24" width="24"
-          height="24">
+             height="24">
           <path
-            d="M23.121,9.069,15.536,1.483a5.008,5.008,0,0,0-7.072,0L.879,9.069A2.978,2.978,0,0,0,0,11.19v9.817a3,3,0,0,0,3,3H21a3,3,0,0,0,3-3V11.19A2.978,2.978,0,0,0,23.121,9.069ZM15,22.007H9V18.073a3,3,0,0,1,6,0Zm7-1a1,1,0,0,1-1,1H17V18.073a5,5,0,0,0-10,0v3.934H3a1,1,0,0,1-1-1V11.19a1.008,1.008,0,0,1,.293-.707L9.878,2.9a3.008,3.008,0,0,1,4.244,0l7.585,7.586A1.008,1.008,0,0,1,22,11.19Z" />
+              d="M23.121,9.069,15.536,1.483a5.008,5.008,0,0,0-7.072,0L.879,9.069A2.978,2.978,0,0,0,0,11.19v9.817a3,3,0,0,0,3,3H21a3,3,0,0,0,3-3V11.19A2.978,2.978,0,0,0,23.121,9.069ZM15,22.007H9V18.073a3,3,0,0,1,6,0Zm7-1a1,1,0,0,1-1,1H17V18.073a5,5,0,0,0-10,0v3.934H3a1,1,0,0,1-1-1V11.19a1.008,1.008,0,0,1,.293-.707L9.878,2.9a3.008,3.008,0,0,1,4.244,0l7.585,7.586A1.008,1.008,0,0,1,22,11.19Z" />
         </svg>
-        <span v-if="!angle">Главная</span></button>
-      <button @click="goPayments" class="btn-item-sb" :class="{ 'btn-active': $route.name == 'payment' }">
+
+        <span v-if="!angle">Главная</span>
+      </transition-button>
+      <transition-button @click="goPayments" :class="{ 'btn-active': $route.name == 'payments' }">
+
         <svg class="change-color" xmlns="http://www.w3.org/2000/svg" id="Outline" viewBox="0 0 24 24" width="24"
-          height="24">
+             height="24">
           <path
-            d="M22.713,4.077A2.993,2.993,0,0,0,20.41,3H4.242L4.2,2.649A3,3,0,0,0,1.222,0H1A1,1,0,0,0,1,2h.222a1,1,0,0,1,.993.883l1.376,11.7A5,5,0,0,0,8.557,19H19a1,1,0,0,0,0-2H8.557a3,3,0,0,1-2.82-2h11.92a5,5,0,0,0,4.921-4.113l.785-4.354A2.994,2.994,0,0,0,22.713,4.077ZM21.4,6.178l-.786,4.354A3,3,0,0,1,17.657,13H5.419L4.478,5H20.41A1,1,0,0,1,21.4,6.178Z" />
+              d="M22.713,4.077A2.993,2.993,0,0,0,20.41,3H4.242L4.2,2.649A3,3,0,0,0,1.222,0H1A1,1,0,0,0,1,2h.222a1,1,0,0,1,.993.883l1.376,11.7A5,5,0,0,0,8.557,19H19a1,1,0,0,0,0-2H8.557a3,3,0,0,1-2.82-2h11.92a5,5,0,0,0,4.921-4.113l.785-4.354A2.994,2.994,0,0,0,22.713,4.077ZM21.4,6.178l-.786,4.354A3,3,0,0,1,17.657,13H5.419L4.478,5H20.41A1,1,0,0,1,21.4,6.178Z" />
           <circle cx="7" cy="22" r="2" />
           <circle cx="17" cy="22" r="2" />
         </svg>
-        <span v-if="!angle"> Платежи</span></button>
-      <button @click="goHistory" :class="{ 'btn-active': $route.name == 'history' }" class="btn-item-sb">
+
+        <span v-if="!angle">Платежи</span>
+      </transition-button>
+      <transition-button @click="goHistory" :class="{ 'btn-active': $route.name == 'history' }">
+
         <svg class="change-color" xmlns="http://www.w3.org/2000/svg" id="Outline" viewBox="0 0 24 24" width="24"
-          height="24">
+             height="24">
           <path d="M12,0A12,12,0,1,0,24,12,12.013,12.013,0,0,0,12,0Zm0,22A10,10,0,1,1,22,12,10.011,10.011,0,0,1,12,22Z" />
           <path
-            d="M12,6a1,1,0,0,0-1,1v4.325L7.629,13.437a1,1,0,0,0,1.062,1.7l3.84-2.4A1,1,0,0,0,13,11.879V7A1,1,0,0,0,12,6Z" />
+              d="M12,6a1,1,0,0,0-1,1v4.325L7.629,13.437a1,1,0,0,0,1.062,1.7l3.84-2.4A1,1,0,0,0,13,11.879V7A1,1,0,0,0,12,6Z" />
         </svg>
-        <span v-if="!angle">История</span></button>
-      <button class="btn-item-sb">
+
+        <span v-if="!angle">История</span>
+      </transition-button>
+      <transition-button>
+
         <svg class="change-color" xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24"
-          width="24" height="24">
+             width="24" height="24">
           <path d="M23,22H5a3,3,0,0,1-3-3V1A1,1,0,0,0,0,1V19a5.006,5.006,0,0,0,5,5H23a1,1,0,0,0,0-2Z" />
           <path d="M6,20a1,1,0,0,0,1-1V12a1,1,0,0,0-2,0v7A1,1,0,0,0,6,20Z" />
           <path d="M10,10v9a1,1,0,0,0,2,0V10a1,1,0,0,0-2,0Z" />
           <path d="M15,13v6a1,1,0,0,0,2,0V13a1,1,0,0,0-2,0Z" />
           <path d="M20,9V19a1,1,0,0,0,2,0V9a1,1,0,0,0-2,0Z" />
           <path
-            d="M6,9a1,1,0,0,0,.707-.293l3.586-3.586a1.025,1.025,0,0,1,1.414,0l2.172,2.172a3,3,0,0,0,4.242,0l5.586-5.586A1,1,0,0,0,22.293.293L16.707,5.878a1,1,0,0,1-1.414,0L13.121,3.707a3,3,0,0,0-4.242,0L5.293,7.293A1,1,0,0,0,6,9Z" />
+              d="M6,9a1,1,0,0,0,.707-.293l3.586-3.586a1.025,1.025,0,0,1,1.414,0l2.172,2.172a3,3,0,0,0,4.242,0l5.586-5.586A1,1,0,0,0,22.293.293L16.707,5.878a1,1,0,0,1-1.414,0L13.121,3.707a3,3,0,0,0-4.242,0L5.293,7.293A1,1,0,0,0,6,9Z" />
         </svg>
-        <span v-if="!angle">Статистика</span></button>
-      <button class="btn-item-sb">
+
+        <span v-if="!angle">Статистика</span>
+      </transition-button>
+      <transition-button>
+
         <svg class="change-color" xmlns="http://www.w3.org/2000/svg" id="Outline" viewBox="0 0 24 24" width="24"
-          height="24">
+             height="24">
           <path
-            d="M19,1H5A5.006,5.006,0,0,0,0,6V18a5.006,5.006,0,0,0,5,5H19a5.006,5.006,0,0,0,5-5V6A5.006,5.006,0,0,0,19,1ZM5,3H19a3,3,0,0,1,2.78,1.887l-7.658,7.659a3.007,3.007,0,0,1-4.244,0L2.22,4.887A3,3,0,0,1,5,3ZM19,21H5a3,3,0,0,1-3-3V7.5L8.464,13.96a5.007,5.007,0,0,0,7.072,0L22,7.5V18A3,3,0,0,1,19,21Z" />
+              d="M19,1H5A5.006,5.006,0,0,0,0,6V18a5.006,5.006,0,0,0,5,5H19a5.006,5.006,0,0,0,5-5V6A5.006,5.006,0,0,0,19,1ZM5,3H19a3,3,0,0,1,2.78,1.887l-7.658,7.659a3.007,3.007,0,0,1-4.244,0L2.22,4.887A3,3,0,0,1,5,3ZM19,21H5a3,3,0,0,1-3-3V7.5L8.464,13.96a5.007,5.007,0,0,0,7.072,0L22,7.5V18A3,3,0,0,1,19,21Z" />
         </svg>
+
         <span v-if="!angle">Помощь</span>
-      </button>
+      </transition-button>
     </div>
     <div class="container-sb-2">
       <button v-if="!isRegistred" @click="goLogin" class="btn-login">Войти</button>
@@ -212,14 +228,7 @@ export default {
   color: #fff;
 }
 
-.btn-item-sb {
-  padding: 8px 16px;
-  font-size: 24px;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+
 
 .btn-active {
   padding: 8px 16px;
@@ -230,10 +239,7 @@ export default {
   background-color: rgb(83, 177, 125);
 }
 
-.btn-item-sb:hover {
-  background-color: rgb(83, 177, 125);
-  box-shadow: 0px 0.5px 10px rgb(62, 126, 91);
-}
+
 
 .container-sb {
   display: flex;

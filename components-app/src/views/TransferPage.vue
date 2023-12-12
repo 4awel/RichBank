@@ -6,7 +6,10 @@ export default {
             summRub: '',
             cardTo: '',
             cardFrom: '',
-            cards: ''
+            cards: '',
+
+            alertErr: false,
+            alertSucc: false
         }
     },
     mounted() {
@@ -20,20 +23,28 @@ export default {
         async sendMoney(evt) {
             evt.preventDefault()
             await axios
-            .put('/send/money', {
-                cardTo: this.cardTo,
-                cardFrom: this.cardFrom,
-                summRub: this.summRub
-            })
-            .then((res) => {
-                console.log('Money is trasperns!', res)
-            })
-            .catch((err) => {
-                console.log('Error, money is not transperens!', err)
-            });
-            this.cardFrom = '';
-            this.cardTo = '';
-            this.summRub = '';
+                .put('/send/money', {
+                    cardTo: this.cardTo,
+                    cardFrom: this.cardFrom,
+                    summRub: this.summRub
+                })
+                .then((res) => {
+                    console.log('Money is trasperns!', res)
+
+                    this.alertSucc = true
+                    this.alertErr = false
+
+                    this.cardFrom = '';
+                    this.cardTo = '';
+                    this.summRub = '';
+                })
+                .catch((err) => {
+                    console.log('Error, money is not transperens!', err)
+
+                    this.alertErr = true
+                    this.alertSucc = false
+                });
+
         }
     }
 }
@@ -53,8 +64,15 @@ export default {
                 <option :value="card.number" v-for="(card, index) in cards">{{ card.number }}</option>
             </select>
         </div>
-        <button type="submit" class="btn-transfer">Перевести</button>
+        <button type="submit" class="btn-transfer">Перевести {{ summRub }}</button>
     </form>
+    <div v-if="alertErr" style="display: flex; justify-content: center; margin: 20px;" class="alert alert-warning"
+        role="alert">
+        На счету недостаточно средств!
+    </div>
+    <div v-if="alertSucc" style="display: flex; justify-content: center; margin: 20px;" class="alert alert-success" role="alert">
+        Средства успешно переведены!
+    </div>
 </template>
 <style scoped>
 .container-transfer {
@@ -81,7 +99,7 @@ input {
 }
 
 .btn-transfer {
-    background-color: rgb(83, 177, 125);
+    box-shadow: 1px 1px 10px rgb(83, 177, 125);
     padding: 10px;
     font-size: 18px;
     border-bottom-right-radius: 20px;
@@ -89,7 +107,7 @@ input {
 }
 
 .btn-transfer:hover {
-    background-color: rgb(63, 148, 101);
+    background-color: rgb(83, 177, 125);
 }
 
 select {

@@ -9,7 +9,6 @@ export default {
   },
   methods: {
     changeTheme(isDarkTheme) {
-      // console.log(isDarkTheme);
       this.theme = isDarkTheme;
     }
   },

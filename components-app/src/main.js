@@ -9,5 +9,14 @@ import App from './App.vue'
 import './assets/style.css';
 import router from './router'
 
+import component from '@/components/UI'
+const app = createApp(App);
+
+component.forEach(component => {
+    app.component(component.name, component)
+})
+
 // Render into HTML
-createApp(App).use(router).mount('#app')
+app
+    .use(router)
+    .mount('#app')

@@ -15,6 +15,7 @@ mongoose.connect('mongodb://127.0.0.1:27017/RichBank');
 // Settng CORS
 let cors = require('cors');
 const { mquery } = require("mongoose");
+const {parseQuery} = require("vue-router");
 app.use(cors({
     origin: 'http://localhost:5173'
 }));
@@ -77,19 +78,22 @@ const userSchema = new mongoose.Schema({
                 type: String,
                 require: true
             },
-            fromOrg: {
+            naming: {
                 type: String,
                 require: true
             },
-            fromName: {
-                type: String,
+            number: {
+                type: Number,
                 require: true
             },
             price: {
-                type: String,
+                type: Number,
                 require: true
             },
-        }
+            value: {
+                type: String,
+            }
+        }, {timestemps: true}
     ]
 });
 
@@ -120,7 +124,7 @@ app.post('/users', async function (req, res) {
                             "naming": naming,
                             "year": year,
                             "title": title,
-                            "balance": 0
+                            "balance": 0,
                         }
 
                         accountUsers.cards.push(cards)
@@ -148,28 +152,53 @@ app.post('/users', async function (req, res) {
 
                         let userFrom = await User.findOne({ "cards.number": cardFrom });
                         const userFromCard = userFrom.cards.find((card) => card.number === cardFrom);
-                        console.log(userFromCard)
 
-                        userFromCard.balance -= summRub
-                        userToCard.balance += summRub
+                        // console.log(userTo.transaction, userTo)
 
-                        // console.log(user, userCard, userCard.balance)
+                        if (userFromCard.balance < summRub) {
+                            res.send(400);
+                        } else {
 
-                        try {
-                            let resultTo = await userTo.save();
-                            let resultFrom = await userFrom.save()
-                            console.log('Изменения успешно сохранены:', resultTo, resultFrom);
-                            res.send(user);
-                        } catch (err) {
-                            // console.error('Ошибка при сохранении изменений:', err);
-                            res.status(500).send(err);
+                            const transactionTo = {
+                                "title": "Перевод",
+                                "naming": userFromCard.naming,
+                                "number": userFromCard.number,
+                                "price": summRub,
+                                "value": 0
+                            }
+                            userTo.transaction.unshift(transactionTo)
+
+                            const transactionFrom = {
+                                "title": "Перевод",
+                                "naming": userToCard.naming,
+                                "number": userToCard.number,
+                                "price": -summRub,
+                                "value": 1
+                            }
+                            userFrom.transaction.unshift(transactionFrom)
+
+                            userToCard.balance += summRub
+                            userFromCard.balance -= summRub
+                            console.log('от:', userFromCard)
+                            console.log('кому:', userToCard)
+                            try {
+                                await userTo.save();
+                                await userFrom.save();
+                                console.log('Изменения успешно сохранены:');
+                                res.send(user);
+                            } catch (err) {
+                                console.error('Ошибка при сохранении изменений:');
+                                res.status(500).send(err);
+                            }
                         }
+
+
                     });
                     res.send(accountUsers);
                 });
             } else {
                 res.status(401);
-                console.log('not found')
+                console.log('Unauthorized')
             }
         }
     } catch (err) {
@@ -213,3 +242,5 @@ app.post('/register/user', async function (req, res) {
         res.send(err)
     }
 });
+
+

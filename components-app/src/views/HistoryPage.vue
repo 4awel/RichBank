@@ -11,10 +11,10 @@ export default {
         this.loadData();
     },
     methods: {
-        async loadData() {
-            const response = await axios('/users/account');
-            this.transactions = response.data.transactions;
-        }
+      async loadData() {
+        const response = await axios('/users/account');
+        this.transactions = response.data.transaction
+      },
     }
 }
 </script>
@@ -28,8 +28,8 @@ export default {
                     'minus-item': transaction.price < 0
             }">
                     <b>{{ transaction.title }}</b>
-                    <span>{{ transaction.fromOrg }}</span>
-                    <span>{{ transaction.fromName }}</span>
+                    <span>{{ transaction.number }}</span>
+                    <span>{{ transaction.naming }}</span>
                     <span>{{ transaction.price }}р</span>
                 </div>
             </div>

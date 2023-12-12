@@ -12,7 +12,9 @@ export default {
             visa: false,
             mir: false,
 
-            openModal: false
+            openModal: false,
+            idCard: '',
+            selectCard: ''
         }
     },
     mounted() {
@@ -29,9 +31,11 @@ export default {
         goAddCard() {
             this.$router.push({ name: 'addcard' });
         },
-        toggleModal() {
+        toggleModal(card) {
             this.openModal = !this.openModal;
-        }
+            this.selectCard = card
+        },
+
     }
 }
 </script>
@@ -75,7 +79,7 @@ export default {
                             <span @click="hideCrad(index)" v-if="hide == index">{{ card.number }}</span>
                             <b @click="hideCrad(index)" v-if="hide !== index">Показать номер карты</b>
                         </div>
-                        <svg @click="toggleModal" class="info-fill" xmlns="http://www.w3.org/2000/svg" id="Outline"
+                        <svg @click="toggleModal(card)" class="info-fill" xmlns="http://www.w3.org/2000/svg" id="Outline"
                             viewBox="0 0 24 24" width="28" height="28">
                             <path
                                 d="M12,0A12,12,0,1,0,24,12,12.013,12.013,0,0,0,12,0Zm0,22A10,10,0,1,1,22,12,10.011,10.011,0,0,1,12,22Z" />
@@ -86,13 +90,13 @@ export default {
                             <div class="modal-main">
                                 <h2 style="color: rgb(43, 172, 107); margin: 20px;">Информация о карте</h2>
 
-                                <div class="modal-container">
-                                    <p class="p-info-to-card">Баланс:<b>{{ card.balance }}</b></p>
-                                    <p class="p-info-to-card">Номер карты: <b>{{ card.number }}</b></p>
-                                    <p class="p-info-to-card">SVS: <b>{{ card.svs }}</b></p>
-                                    <p class="p-info-to-card">Имя на карте: <b>{{ card.naming }}</b></p>
-                                    <p class="p-info-to-card">Срок действия: <b>{{ card.year / 100 }}</b></p>
-                                    <p class="p-info-to-card">Название карты: <b>{{ card.title }}</b></p>
+                                <div  class="modal-container">
+                                    <p class="p-info-to-card">Баланс:<b>{{ selectCard.balance }}</b></p>
+                                    <p class="p-info-to-card">Номер карты: <b>{{ selectCard.number }}</b></p>
+                                    <p class="p-info-to-card">SVS: <b>{{ selectCard.svs }}</b></p>
+                                    <p class="p-info-to-card">Имя на карте: <b>{{ selectCard.naming }}</b></p>
+                                    <p class="p-info-to-card">Срок действия: <b>{{ selectCard.year / 100 }}</b></p>
+                                    <p class="p-info-to-card">Название карты: <b>{{ selectCard.title }}</b></p>
                                 </div>
 
                                 <button @click="toggleModal" class="modal-close">
@@ -109,7 +113,9 @@ export default {
                                 </button>
 
                                 <div style="display: flex; justify-content: end;">
-                                    <button class="delete-btn">Удалить карту</button>
+                                    <delete-button>
+                                      Удалить карту
+                                    </delete-button>
                                 </div>
                             </div>
                         </div>
@@ -125,20 +131,6 @@ export default {
 .p-info-to-card {
     display: flex;
     justify-content: space-between;
-}
-
-.delete-btn {
-    color: #fff;
-    padding: 10px;
-    margin: 20px 0 0 0;
-    background-color: #e03131d2;
-    border-radius: 20px;
-    border: none;
-}
-
-.delete-btn:hover {
-    transition: all 500ms;
-    background-color: #a82d2dd2;
 }
 
 .modal {

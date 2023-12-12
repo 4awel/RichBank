@@ -14,14 +14,18 @@ export default {
         async loadData() {
             const response = await axios('/users/account');
             this.username = response.data.email;
+        },
+        goLogin() {
+            this.$router.push({name: 'login'})
         }
-    }
+    },
 }
 </script>
 <template>
     <main>
         <div>
             <h2 style="font-size: 40px;">Имя пользователя: {{ username }}</h2>
+          <button @click="goLogin" class="btn-login">Войти в другой аккаунт</button>
         </div>
         <form class="form-add-img">
             <label for="img_upload">
@@ -62,5 +66,10 @@ export default {
 
 .btn-add-img:hover {
     background-color: #2bb179bd;
+}
+
+.btn-login {
+  background-color: #40a77f;
+  margin: 10px;
 }
 </style>
