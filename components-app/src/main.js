@@ -4,6 +4,7 @@ axios.defaults.baseURL = 'http://localhost:3005';
 
 // All Vue
 import { createApp } from 'vue'
+import { Bar } from 'vue-chartjs'
 import App from './App.vue'
 
 import './assets/style.css';

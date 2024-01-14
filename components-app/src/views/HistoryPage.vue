@@ -5,16 +5,20 @@ export default {
     data() {
         return {
             transactions: '',
+            scroll: false
         }
     },
     mounted() {
         this.loadData();
     },
     methods: {
-      async loadData() {
-        const response = await axios('/users/account');
-        this.transactions = response.data.transaction
-      },
+        async loadData() {
+            const response = await axios('/users/account');
+            this.transactions = response.data.transaction
+            if (this.transactions.length >= 10) {
+                this.scroll = true
+            }
+        },
     }
 }
 </script>
@@ -22,11 +26,11 @@ export default {
     <main>
         <div class="container-history">
             <h2>История</h2>
-            <div class="container">
+            <div style="padding: 8px;" class="container" :class="{'scroll': scroll}">
                 <div v-for="(transaction) in transactions" :class="{
                     'plus-item': transaction.price > 0,
                     'minus-item': transaction.price < 0
-            }">
+                }">
                     <b>{{ transaction.title }}</b>
                     <span>{{ transaction.number }}</span>
                     <span>{{ transaction.naming }}</span>
@@ -48,9 +52,19 @@ h2 {
     font-weight: 600;
 }
 
-.container {
-    padding: 8px;
+.scroll {
+    height: 50vh;
+    overflow-y: scroll;
 }
+
+@media (max-height: 800px) {
+
+    .container {
+        height: 50vh;
+        overflow-y: scroll;
+    }
+}
+
 
 .plus-item {
     font-weight: 600;

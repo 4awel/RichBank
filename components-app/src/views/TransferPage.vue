@@ -22,28 +22,32 @@ export default {
         },
         async sendMoney(evt) {
             evt.preventDefault()
-            await axios
-                .put('/send/money', {
-                    cardTo: this.cardTo,
-                    cardFrom: this.cardFrom,
-                    summRub: this.summRub
-                })
-                .then((res) => {
-                    console.log('Money is trasperns!', res)
-
-                    this.alertSucc = true
-                    this.alertErr = false
-
-                    this.cardFrom = '';
-                    this.cardTo = '';
-                    this.summRub = '';
-                })
-                .catch((err) => {
-                    console.log('Error, money is not transperens!', err)
-
-                    this.alertErr = true
-                    this.alertSucc = false
-                });
+            if (this.cardFrom !== this.cardTo && this.summRub != '') {
+                await axios
+                    .put('/send/money', {
+                        cardTo: this.cardTo,
+                        cardFrom: this.cardFrom,
+                        summRub: this.summRub
+                    })
+                    .then((res) => {
+                        console.log('Money is trasperns!', res)
+    
+                        this.alertSucc = true
+                        this.alertErr = false
+    
+                        this.cardFrom = '';
+                        this.cardTo = '';
+                        this.summRub = '';
+                    })
+                    .catch((err) => {
+                        console.log('Error, money is not transperens!', err)
+    
+                        this.alertErr = true
+                        this.alertSucc = false
+                    });
+            } else {
+                this.alertErr = true
+            }
 
         }
     }

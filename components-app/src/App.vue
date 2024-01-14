@@ -2,6 +2,7 @@
 import SideBar from './components/SideBar.vue';
 import { RouterView } from 'vue-router';
 
+
 export default {
   components: {
     SideBar,
@@ -21,7 +22,7 @@ export default {
 </script>
 
 <template>
-  <div class="app" :class="{'dark-theme': theme}">
+  <div class="app" :class="{ 'dark-theme': theme }">
     <!-- <side-bar></side-bar>
     <router-view></router-view> -->
     <div class="container py-3">
@@ -32,7 +33,7 @@ export default {
         </div>
         <div class="col-10">
           <!-- Правая колонка -->
-          <router-view></router-view>
+          <router-view ref="bar"></router-view>
         </div>
       </div>
     </div>
@@ -40,13 +41,13 @@ export default {
 </template>
 
 <style>
-  .app {
-    /* display: flex; */
-    height: 100vh;
-  }
+.app {
+  /* display: flex; */
+  height: 100vh;
+}
 
-  .dark-theme {
-    background: #303030;
-    color: #fff;
-  }
+.dark-theme {
+  background: #303030;
+  color: #fff;
+}
 </style>

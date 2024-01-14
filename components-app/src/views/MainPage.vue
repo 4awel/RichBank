@@ -14,7 +14,9 @@ export default {
 
             openModal: false,
             idCard: '',
-            selectCard: ''
+            selectCard: '',
+            scroll: false,
+            presentEvt: false,
         }
     },
     mounted() {
@@ -27,6 +29,9 @@ export default {
         async loadData() {
             const response = await axios('/users/account');
             this.cards = response.data.cards;
+            if (this.cards.length >= 6) {
+                this.scroll = true
+            }
         },
         goAddCard() {
             this.$router.push({ name: 'addcard' });
@@ -35,6 +40,14 @@ export default {
             this.openModal = !this.openModal;
             this.selectCard = card
         },
+        async deleteCard(number) {
+            console.log(number);
+            await axios.post('/delete/card', {
+                number: number,
+            });
+            this.openModal = false
+            this.presentEvt = true
+        }
 
     }
 }
@@ -49,7 +62,7 @@ export default {
                     <path
                         d="M17,12c0,.553-.448,1-1,1h-3v3c0,.553-.448,1-1,1s-1-.447-1-1v-3h-3c-.552,0-1-.447-1-1s.448-1,1-1h3v-3c0-.553,.448-1,1-1s1,.447,1,1v3h3c.552,0,1,.447,1,1Zm7-7v14c0,2.757-2.243,5-5,5H5c-2.757,0-5-2.243-5-5V5C0,2.243,2.243,0,5,0h14c2.757,0,5,2.243,5,5Zm-2,0c0-1.654-1.346-3-3-3H5c-1.654,0-3,1.346-3,3v14c0,1.654,1.346,3,3,3h14c1.654,0,3-1.346,3-3V5Z" />
                 </svg>
-                <div class="under-group-item">
+                <div class="under-group-item scroll-height" :class="{ 'scroll': scroll }">
                     <li v-for="(card, index) in cards" class="item">
 
                         <svg :class="{
@@ -86,11 +99,11 @@ export default {
                             <path d="M12,10H11a1,1,0,0,0,0,2h1v6a1,1,0,0,0,2,0V12A2,2,0,0,0,12,10Z" />
                             <circle cx="12" cy="6.5" r="1.5" />
                         </svg>
-                        <div v-if="openModal" class="modal">
+                        <form @submit.prevent="deleteCard(selectCard.number)" v-if="openModal" class="modal">
                             <div class="modal-main">
                                 <h2 style="color: rgb(43, 172, 107); margin: 20px;">Информация о карте</h2>
 
-                                <div  class="modal-container">
+                                <div class="modal-container">
                                     <p class="p-info-to-card">Баланс:<b>{{ selectCard.balance }}</b></p>
                                     <p class="p-info-to-card">Номер карты: <b>{{ selectCard.number }}</b></p>
                                     <p class="p-info-to-card">SVS: <b>{{ selectCard.svs }}</b></p>
@@ -114,13 +127,16 @@ export default {
 
                                 <div style="display: flex; justify-content: end;">
                                     <delete-button>
-                                      Удалить карту
+                                        Удалить карту
                                     </delete-button>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </li>
                 </div>
+            </div>
+            <div v-if="presentEvt" class="alert alert-info" role="alert">
+                Карта успешно удалена!
             </div>
         </ul>
 
@@ -128,6 +144,18 @@ export default {
     </main>
 </template>
 <style>
+@media (max-height: 800px) {
+    .scroll-height {
+        height: 50vh;
+        overflow-y: scroll;
+    }
+}
+
+.scroll {
+    height: 50vh;
+    overflow-y: scroll;
+}
+
 .p-info-to-card {
     display: flex;
     justify-content: space-between;
@@ -256,4 +284,5 @@ export default {
 
 .card-fill-visa {
     fill: rgba(102, 191, 250, 0.788);
-}</style>
+}
+</style>
