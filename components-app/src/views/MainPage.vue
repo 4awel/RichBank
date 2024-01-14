@@ -11,6 +11,12 @@ export default {
             mc: false,
             visa: false,
             mir: false,
+
+            openModal: false,
+            idCard: '',
+            selectCard: '',
+            scroll: false,
+            presentEvt: false,
         }
     },
     mounted() {
@@ -23,10 +29,26 @@ export default {
         async loadData() {
             const response = await axios('/users/account');
             this.cards = response.data.cards;
+            if (this.cards.length >= 6) {
+                this.scroll = true
+            }
         },
         goAddCard() {
             this.$router.push({ name: 'addcard' });
+        },
+        toggleModal(card) {
+            this.openModal = !this.openModal;
+            this.selectCard = card
+        },
+        async deleteCard(number) {
+            console.log(number);
+            await axios.post('/delete/card', {
+                number: number,
+            });
+            this.openModal = false
+            this.presentEvt = true
         }
+
     }
 }
 </script>
@@ -40,15 +62,14 @@ export default {
                     <path
                         d="M17,12c0,.553-.448,1-1,1h-3v3c0,.553-.448,1-1,1s-1-.447-1-1v-3h-3c-.552,0-1-.447-1-1s.448-1,1-1h3v-3c0-.553,.448-1,1-1s1,.447,1,1v3h3c.552,0,1,.447,1,1Zm7-7v14c0,2.757-2.243,5-5,5H5c-2.757,0-5-2.243-5-5V5C0,2.243,2.243,0,5,0h14c2.757,0,5,2.243,5,5Zm-2,0c0-1.654-1.346-3-3-3H5c-1.654,0-3,1.346-3,3v14c0,1.654,1.346,3,3,3h14c1.654,0,3-1.346,3-3V5Z" />
                 </svg>
-                <div class="under-group-item">
+                <div class="under-group-item scroll-height" :class="{ 'scroll': scroll }">
                     <li v-for="(card, index) in cards" class="item">
-                        
+
                         <svg :class="{
-                            'card-fill-mc': card.title == 'mastercard',
-                            'card-fill-mir': card.title == 'mir',
-                            'card-fill-visa': card.title == 'visa',
-                        }" xmlns="http://www.w3.org/2000/svg" id="Filled" viewBox="0 0 24 24" width="94"
-                            height="94">
+                            'card-fill-mc': card.title == 'MasterCard',
+                            'card-fill-mir': card.title == 'MIR',
+                            'card-fill-visa': card.title == 'VISA',
+                        }" xmlns="http://www.w3.org/2000/svg" id="Filled" viewBox="0 0 24 24" width="94" height="94">
                             <path d="M19,3H5A5.006,5.006,0,0,0,0,8H24A5.006,5.006,0,0,0,19,3Z" />
                             <path
                                 d="M0,16a5.006,5.006,0,0,0,5,5H19a5.006,5.006,0,0,0,5-5V10H0Zm7-.5A1.5,1.5,0,1,1,5.5,14,1.5,1.5,0,0,1,7,15.5" />
@@ -71,20 +92,116 @@ export default {
                             <span @click="hideCrad(index)" v-if="hide == index">{{ card.number }}</span>
                             <b @click="hideCrad(index)" v-if="hide !== index">Показать номер карты</b>
                         </div>
-                        <svg class="info-fill" xmlns="http://www.w3.org/2000/svg" id="Outline" viewBox="0 0 24 24"
-                            width="28" height="28">
+                        <svg @click="toggleModal(card)" class="info-fill" xmlns="http://www.w3.org/2000/svg" id="Outline"
+                            viewBox="0 0 24 24" width="28" height="28">
                             <path
                                 d="M12,0A12,12,0,1,0,24,12,12.013,12.013,0,0,0,12,0Zm0,22A10,10,0,1,1,22,12,10.011,10.011,0,0,1,12,22Z" />
                             <path d="M12,10H11a1,1,0,0,0,0,2h1v6a1,1,0,0,0,2,0V12A2,2,0,0,0,12,10Z" />
                             <circle cx="12" cy="6.5" r="1.5" />
                         </svg>
+                        <form @submit.prevent="deleteCard(selectCard.number)" v-if="openModal" class="modal">
+                            <div class="modal-main">
+                                <h2 style="color: rgb(43, 172, 107); margin: 20px;">Информация о карте</h2>
+
+                                <div class="modal-container">
+                                    <p class="p-info-to-card">Баланс:<b>{{ selectCard.balance }}</b></p>
+                                    <p class="p-info-to-card">Номер карты: <b>{{ selectCard.number }}</b></p>
+                                    <p class="p-info-to-card">SVS: <b>{{ selectCard.svs }}</b></p>
+                                    <p class="p-info-to-card">Имя на карте: <b>{{ selectCard.naming }}</b></p>
+                                    <p class="p-info-to-card">Срок действия: <b>{{ selectCard.year / 100 }}</b></p>
+                                    <p class="p-info-to-card">Название карты: <b>{{ selectCard.title }}</b></p>
+                                </div>
+
+                                <button @click="toggleModal" class="modal-close">
+                                    <!-- Generator: Adobe Illustrator 25.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                                        version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 512.021 512.021"
+                                        style="enable-background:new 0 0 512.021 512.021;" xml:space="preserve" width="24"
+                                        height="24">
+                                        <g>
+                                            <path
+                                                d="M301.258,256.01L502.645,54.645c12.501-12.501,12.501-32.769,0-45.269c-12.501-12.501-32.769-12.501-45.269,0l0,0   L256.01,210.762L54.645,9.376c-12.501-12.501-32.769-12.501-45.269,0s-12.501,32.769,0,45.269L210.762,256.01L9.376,457.376   c-12.501,12.501-12.501,32.769,0,45.269s32.769,12.501,45.269,0L256.01,301.258l201.365,201.387   c12.501,12.501,32.769,12.501,45.269,0c12.501-12.501,12.501-32.769,0-45.269L301.258,256.01z" />
+                                        </g>
+                                    </svg>
+                                </button>
+
+                                <div style="display: flex; justify-content: end;">
+                                    <delete-button>
+                                        Удалить карту
+                                    </delete-button>
+                                </div>
+                            </div>
+                        </form>
                     </li>
                 </div>
             </div>
+            <div v-if="presentEvt" class="alert alert-info" role="alert">
+                Карта успешно удалена!
+            </div>
         </ul>
+
+
     </main>
 </template>
 <style>
+@media (max-height: 800px) {
+    .scroll-height {
+        height: 50vh;
+        overflow-y: scroll;
+    }
+}
+
+.scroll {
+    height: 50vh;
+    overflow-y: scroll;
+}
+
+.p-info-to-card {
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal {
+    position: fixed;
+    inset: 0;
+    background-color: #0000003f;
+    display: flex;
+    cursor: pointer;
+    padding: 30px;
+    overflow-y: auto;
+}
+
+.modal-main {
+    position: relative;
+    max-width: 600px;
+    background-color: #fff;
+    margin: auto;
+    color: #000000;
+    border-radius: 16px;
+    padding: 30px;
+    cursor: default;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.modal-close {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 22px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    border: 2px solid rgb(83, 177, 125);
+    border-radius: 50%;
+    padding: 6px;
+}
+
+.modal-close:hover {
+    background-color: rgba(44, 102, 71, 0.308);
+}
+
 .info-fill {
     fill: rgb(56, 151, 99);
 }
@@ -112,7 +229,6 @@ export default {
 
 .item-group {
     display: flex;
-
 }
 
 .item {
@@ -168,4 +284,5 @@ export default {
 
 .card-fill-visa {
     fill: rgba(102, 191, 250, 0.788);
-}</style>
+}
+</style>

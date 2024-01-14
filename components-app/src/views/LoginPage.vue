@@ -8,10 +8,11 @@ import axios from 'axios';
                 alertErr: false,
             }
         },
+      mounted() {
+      },
         methods: {
-            async sendData(event) {
+          async sendData() {
                 if (this.email == '' || this.password == '') {
-                    event.preventDefault();
                     this.alertErr = true;
                 } else {
                     await axios.post('/users', {
@@ -20,7 +21,7 @@ import axios from 'axios';
                     });
                 }
             },
-            goRegister() {
+          goRegister() {
                 this.$router.push({name: 'register'});  
             }
         }
@@ -28,19 +29,19 @@ import axios from 'axios';
 </script>
 <template>
 
-<main style="height: 95vh; display: flex; justify-content: center; align-items: center;">
+<main style="height: 90vh; display: flex; justify-content: center; align-items: center;">
     <form @submit="sendData" class="container-login">
         <h2 style="font-size: 32px; text-align: center;">
             Вход
         </h2>
-        <label for="login">
+        <label for="email">
             Логин
         </label>
-        <input v-model="email" type="text" placeholder="Введите логин">
+        <input id="email" v-model="email" type="text" placeholder="Введите логин">
         <label for="password">
             Пароль
         </label>
-        <input v-model="password" type="password" placeholder="Введите пароль">
+        <input id="password" v-model="password" type="password" placeholder="Введите пароль">
         <button type="submit">Войти</button>
         <p @click="goRegister" class="transition-register" href="" style="text-align: center;">Зарегестрироваться</p>
         <div v-if="alertErr" class="alert-error" style="background-color: rgba(255, 0, 0, 0.315); padding: 20px;">

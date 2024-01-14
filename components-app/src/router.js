@@ -6,6 +6,8 @@ import ProfilePage from './views/ProfilePage.vue';
 import LoginPage from './views/LoginPage.vue';
 import CardPage from './views/CardPage.vue';
 import RegisterPage from './views/RegisterPage.vue';
+import TransferPage from './views/TransferPage.vue';
+import BarChart from './views/BarChart.vue';
 
 export default createRouter({
     history: createWebHistory(),
@@ -45,6 +47,16 @@ export default createRouter({
             name: 'register',
             path: '/register',
             component: RegisterPage
-        }
+        },
+        {
+            name: 'transfer',
+            path: '/transfer',
+            component: TransferPage
+        },
+        {
+            name: 'barchart',
+            path: '/barchart',
+            component: BarChart
+        },
     ]
 })
